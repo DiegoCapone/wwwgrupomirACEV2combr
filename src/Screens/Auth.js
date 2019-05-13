@@ -9,6 +9,10 @@ import axios from 'axios'
 export default class Auth extends Component {
     constructor(props) {
         super(props);
+        this.state = {
+            cpf: null,
+            placa: null
+        }
     }
 
     GeraToken = async () => {
@@ -22,12 +26,11 @@ export default class Auth extends Component {
             console.log(res.data.Token)
             axios.defaults.headers.common['token']
                 = `${res.data.Token}`
-            this.props.navigation.navigate('App')
+            this.props.navigation.navigate('Home')
 
         } catch (err) {
             console.log(err)
         }
-
     }
 
     render() {
@@ -40,16 +43,20 @@ export default class Auth extends Component {
                 <View style={styles.container}>
                     <TextInput
                         icon='truck'
-                        placeholder='Placa ?'
-                        value='MIR-0055'
-                        editable={false} style={{ marginBottom: 5 }} />
+                        placeholder='Placa'
+                        value={this.state.value}
+                        editable={true} style={{ marginBottom: 5 }}
+                        onChangeText={placa => this.setState({ placa })} />
+
                     <TextInput
                         icon='address-card'
-                        placeholder='CPF ?'
-                        value='123456789-01'
-                        editable={false} />
+                        placeholder='CPF'
+                        value={this.state.value}
+                        editable={true}
+                        onChangeText={cpf => this.setState({ cpf })} />
                     <BtnAdd nome='Login' action={this.GeraToken} />
                 </View>
+
             </ImageBackground>
         );
     }

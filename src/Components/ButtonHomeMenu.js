@@ -26,6 +26,7 @@ const styles = StyleSheet.create({
         height: 200,
         backgroundColor: Styles.cor.branco,
         marginLeft: 20,
+        marginBottom: 20,
         borderRadius: 10,
         // borderWidth: 1,
         // borderColor: Styles.cor.azul,
@@ -48,7 +49,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     title: {
-        fontSize: Styles.size.grande,
+        fontSize: Styles.size.medio,
         fontFamily: Styles.font.helvetica,
         color: Styles.cor.azul
     }
