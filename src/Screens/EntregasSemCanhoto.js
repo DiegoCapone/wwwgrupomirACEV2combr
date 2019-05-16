@@ -4,55 +4,20 @@ import ComponentEntregas from '../Components/ComponentEntregas'
 import SemCanhoto from '../Components/SemCanhoto'
 import moment from 'moment'
 import 'moment/locale/pt-br'
+import { connect } from 'react-redux'
 
 initialState = {
     entregas: []
 }
 
-export default class ComCanhoto extends Component {
+class EntregasSemCanhoto extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            entregas: []
+            entregas: [],
         };
     }
 
-    // finalizarCanhoto = async () => {
-
-    //     if (!this.state.obs) {
-    //         return Alert.alert('Informe quem recebeu a entrega')
-    //     }
-
-    //     if (!this.state.lat && !this.state.long) {
-    //         this.stateInitial()
-    //         this.props.navigation.navigate('Home')
-    //         return Alert.alert('Error')
-    //     }
-
-    //     const res = await axios.post('http://200.150.166.73:5008/EnviaFoto', {
-    //         foto: this.state.image.base64,
-    //         lat: this.state.lat,
-    //         long: this.state.long,
-    //         obs: this.state.obs,
-    //         date: moment().format('YYYY[-]MM[-]D'),
-    //         cpf: '123456789-01',
-    //         placa: 'Mir-0055',
-    //         chave: this.state.entrega.chavenfe
-    //     })
-    //     // 
-    //     console.log(res.data)
-    //     const status = res.data.ttretorno[0].observacao
-    //     const statusTrue = "ACE - Registro concluido com sucesso"
-
-    //     if (status == statusTrue) {
-    //         this.updateItem()
-    //     } else {
-    //         Alert.alert('Erro no request')
-
-    //     }
-
-
-    // }
 
     VoltarPendente = async (item) => {
         console.log('upadteitem')
@@ -105,9 +70,9 @@ export default class ComCanhoto extends Component {
 
     render() {
         const { entregas } = this.state;
-        const Filter = entregas.filter(e => !e.canhoto && e.finalizada)
+        const Filter = entregas.filter(e =>
+            !e.canhoto && e.finalizada && e.cpf == this.props.cpf && e.placa == this.props.placa)
         return (
-
             <ComponentEntregas onVoltar={this.Voltar}
                 lista={
                     <FlatList data={Filter}
@@ -121,3 +86,11 @@ export default class ComCanhoto extends Component {
     }
 }
 
+const mapStateToProps = ({ placaCpf }) => {
+    return {
+        placa: placaCpf.placa,
+        cpf: placaCpf.cpf,
+    }
+}
+
+export default connect(mapStateToProps, null)(EntregasSemCanhoto)

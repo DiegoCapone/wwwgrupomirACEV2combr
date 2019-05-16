@@ -16,7 +16,6 @@ import SemCanhoto from './Screens/EntregasSemCanhoto'
 import DetalhesCanhoto from './Screens/DetalhesCanhoto'
 import DetalhesSemCanhoto from './Screens/DetalhesSemCanhoto'
 
-
 const MainRoutes = {
     Auth: {
         name: 'Auth',
@@ -65,7 +64,7 @@ const MainRoutes = {
 }
 
 const MainNavigator = createSwitchNavigator(MainRoutes, {
-    initialRouteName: 'ValidaToken'
+    initialRouteName: 'Auth'
 })
 
 const AppContainer = createAppContainer(MainNavigator);

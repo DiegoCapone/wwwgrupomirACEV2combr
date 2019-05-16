@@ -72,6 +72,8 @@ class AdicionarCodeBar extends Component {
                 id: Math.random(),
                 date: moment().format('YYYY[-]MM[-]D'),
                 finalizada: false,
+                placa: this.props.placa,
+                cpf: this.props.cpf,
                 ...res.data.ttretorno[0]
             })
             this.setState({ entregas })
@@ -238,9 +240,10 @@ const styles = StyleSheet.create({
     }
 });
 
-const mapStateToProps = ({ codeBar }) => {
+const mapStateToProps = ({ placaCpf }) => {
     return {
-        codeBar: codeBar.codeBar,
+        placa: placaCpf.placa,
+        cpf: placaCpf.cpf,
     }
 }
 

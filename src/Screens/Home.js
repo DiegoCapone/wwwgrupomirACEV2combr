@@ -6,11 +6,12 @@ import Styles from '../Components/StylesPattern'
 import BtnSair from '../Components/ButtonSair'
 import moment from 'moment'
 import 'moment/locale/pt-br'
+import { connect } from 'react-redux'
 
 
 // import { Container } from './styles';
 
-export default class ComponentHome extends Component {
+class ComponentHome extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -32,8 +33,8 @@ export default class ComponentHome extends Component {
                 <View style={styles.container}>
                     <View style={styles.containerHeader}>
                         <Text style={styles.data}>{moment().locale('pt-br').format('ddd, D [de] MMMM [de] YYYY')}</Text>
-                        <Text style={styles.dados}>Placa - MIR-0055</Text>
-                        <Text style={styles.dados}>CPF - 123456789-01</Text>
+                        <Text style={styles.dados}>Placa - {this.props.placa}</Text>
+                        <Text style={styles.dados}>CPF - {this.props.cpf}</Text>
                         <BtnSair nome='Logout' action={this.Logout} />
                     </View>
                     <View style={styles.containerBody} >
@@ -83,3 +84,12 @@ const styles = StyleSheet.create({
 });
 
 
+const mapStateToProps = ({ placaCpf }) => {
+    return {
+        placa: placaCpf.placa,
+        cpf: placaCpf.cpf
+    }
+}
+
+
+export default connect(mapStateToProps, null)(ComponentHome)

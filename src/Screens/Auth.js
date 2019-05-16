@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
-import { StyleSheet, ImageBackground, View, Text } from 'react-native';
+import { StyleSheet, ImageBackground, View, Text, Alert } from 'react-native';
 import HomeImage from '../assets/img/bg-home.png'
 import BtnAdd from '../Components/ButtonAdd'
 import TextInput from '../Components/TextIpunt'
 import Styles from '../Components/StylesPattern'
 import axios from 'axios'
+import { connect } from 'react-redux'
+import { onPlacaCpf } from '../store/actions/placaCpf'
 
-export default class Auth extends Component {
+class Auth extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -16,6 +18,14 @@ export default class Auth extends Component {
     }
 
     GeraToken = async () => {
+        if (!this.state.placa) {
+            return Alert.alert('Informe a placa')
+        }
+
+        if (!this.state.cpf) {
+            return Alert.alert('Informe a o cpf')
+        }
+
         try {
             const res = await axios.get('http://200.150.166.73:5008/GeraToken', {
                 auth: {
@@ -26,12 +36,16 @@ export default class Auth extends Component {
             console.log(res.data.Token)
             axios.defaults.headers.common['token']
                 = `${res.data.Token}`
+            this.props.onPlacaCpf({ ...this.state })
             this.props.navigation.navigate('Home')
+            console.log(this.props.cpf, this.props.placa)
+
 
         } catch (err) {
             console.log(err)
         }
     }
+
 
     render() {
         return (
@@ -44,14 +58,14 @@ export default class Auth extends Component {
                     <TextInput
                         icon='truck'
                         placeholder='Placa'
-                        value={this.state.value}
+                        value={this.state.placa}
                         editable={true} style={{ marginBottom: 5 }}
                         onChangeText={placa => this.setState({ placa })} />
 
                     <TextInput
                         icon='address-card'
                         placeholder='CPF'
-                        value={this.state.value}
+                        value={this.state.cnpj}
                         editable={true}
                         onChangeText={cpf => this.setState({ cpf })} />
                     <BtnAdd nome='Login' action={this.GeraToken} />
@@ -86,3 +100,19 @@ const styles = StyleSheet.create({
 
     }
 });
+
+
+const mapStateToProps = ({ placaCpf }) => {
+    return {
+        placa: placaCpf.placa,
+        cpf: placaCpf.cpf
+    }
+}
+
+const mapDispatchToProps = dispatch => {
+    return {
+        onPlacaCpf: placaCpf => dispatch(onPlacaCpf(placaCpf))
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Auth)

@@ -6,10 +6,11 @@ import BtnSair from '../Components/ButtonSair'
 import Entregas from '../Components/Pendentes'
 import moment from 'moment'
 import 'moment/locale/pt-br'
+import { connect } from 'react-redux'
 
 
 
-export default class EntregasPendentes extends Component {
+class EntregasPendentes extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -46,18 +47,18 @@ export default class EntregasPendentes extends Component {
 
     render() {
         const { entregas } = this.state;
-        const Filter = entregas.filter(e => !e.finalizada)
+        const Filter = entregas.filter(e => !e.finalizada && e.placa == this.props.placa && e.cpf == this.props.cpf)
         return (
             <ImageBackground source={HomeImage} style={{ flex: 1, resizeMode: 'stretch' }}>
                 <View style={styles.container}>
                     <View style={styles.containerHeader}>
                         <Text style={styles.data}>{moment().locale('pt-br').format('ddd, D [de] MMMM [de] YYYY')}</Text>
-                        <Text style={styles.dados}>Placa - MIR-0055</Text>
-                        <Text style={styles.dados}>CPF - 123456789-01</Text>
+                        <Text style={styles.dados}>Placa - {this.props.placa}</Text>
+                        <Text style={styles.dados}>CPF - {this.props.cpf}</Text>
                         <BtnSair nome='Voltar' action={() => this.props.navigation.navigate('Home')} />
                     </View>
-                    <View style={styles.containerBody} >
 
+                    <View style={styles.containerBody} >
                         <FlatList data={Filter}
                             keyExtractor={item => `${item.id}`}
                             renderItem={({ item }) =>
@@ -105,3 +106,11 @@ const styles = StyleSheet.create({
     }
 });
 
+const mapStateToProps = ({ placaCpf }) => {
+    return {
+        placa: placaCpf.placa,
+        cpf: placaCpf.cpf,
+    }
+}
+
+export default connect(mapStateToProps, null)(EntregasPendentes)

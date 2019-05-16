@@ -52,5 +52,5 @@ const styles = StyleSheet.create({
         fontSize: Styles.size.medio,
         fontFamily: Styles.font.helvetica,
         color: Styles.cor.azul
-    }
+    },
 });

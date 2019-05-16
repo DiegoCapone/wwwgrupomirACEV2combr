@@ -2,12 +2,13 @@ import React, { Component } from 'react';
 import { View, Text, ImageBackground, StyleSheet, FlatList, AsyncStorage } from 'react-native';
 import ComponentEntregas from '../Components/ComponentEntregas'
 import FinalizadaCanhoto from '../Components/FinalizadaCanhoto'
+import { connect } from 'react-redux'
 
 initialState = {
     entregas: []
 }
 
-export default class ComCanhoto extends Component {
+class ComCanhoto extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -46,7 +47,7 @@ export default class ComCanhoto extends Component {
 
     render() {
         const { entregas } = this.state;
-        const Filter = entregas.filter(e => e.canhoto)
+        const Filter = entregas.filter(e => e.canhoto && e.cpf == this.props.cpf && e.placa == this.props.placa)
         return (
 
             <ComponentEntregas onVoltar={this.Voltar}
@@ -61,4 +62,13 @@ export default class ComCanhoto extends Component {
         );
     }
 }
+
+const mapStateToProps = ({ placaCpf }) => {
+    return {
+        placa: placaCpf.placa,
+        cpf: placaCpf.cpf,
+    }
+}
+
+export default connect(mapStateToProps, null)(ComCanhoto)
 

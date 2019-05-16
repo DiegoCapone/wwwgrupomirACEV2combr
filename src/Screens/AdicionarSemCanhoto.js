@@ -23,7 +23,10 @@ export default class AdicionarSemCanhoto extends Component {
             entrega: null,
             nome: null,
             rg: null,
-            telefone: null
+            telefone: null,
+            lat: null,
+            long: null
+
         }
     }
 
@@ -61,7 +64,16 @@ export default class AdicionarSemCanhoto extends Component {
             return Alert.alert('Informe o RG')
         }
 
-
+        navigator.geolocation.getCurrentPosition((position) => {
+            console.log(position.coords.latitude)
+            console.log(position.coords.longitude)
+            this.setState({
+                lat: position.coords.latitude,
+                long: position.coords.longitude
+            })
+        }, (error) => {
+            console.log(error)
+        })
 
         const res = await axios.post('http://200.150.166.73:5008/EnviaFoto', {
             obs: this.state.nome,
@@ -86,8 +98,8 @@ export default class AdicionarSemCanhoto extends Component {
         console.log('upadteitem')
         const itemUpdate = {
             ...this.state.entrega,
-            lat: null,
-            long: null,
+            lat: this.state.lat,
+            long: this.state.long,
             image: null,
             nome: this.state.nome,
             rg: this.state.rg,
