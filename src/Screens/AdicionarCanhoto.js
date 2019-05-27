@@ -7,7 +7,9 @@ import TextInput from '../Components/TextIpunt'
 import moment from 'moment'
 import 'moment/locale/pt-br'
 import axios from 'axios'
-import { RNCamera } from 'react-native-camera';
+
+
+
 
 
 
@@ -55,6 +57,7 @@ export default class AdicionarCanhoto extends Component {
             return Alert.alert('Error Lat e Long')
         }
 
+
         const res = await axios.post('http://200.150.166.73:5008/EnviaFoto', {
             foto: this.state.image.base64,
             lat: this.state.lat,
@@ -65,7 +68,7 @@ export default class AdicionarCanhoto extends Component {
             placa: 'Mir-0055',
             chave: this.state.entrega.chavenfe
         })
-        // 
+
         console.log(res.data)
         const status = res.data.ttretorno[0].observacao
         const statusTrue = "ACE - Registro concluido com sucesso"
@@ -76,6 +79,7 @@ export default class AdicionarCanhoto extends Component {
             Alert.alert('Erro no request')
 
         }
+        console.log(true)
 
 
     }

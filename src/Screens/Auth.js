@@ -7,6 +7,7 @@ import Styles from '../Components/StylesPattern'
 import axios from 'axios'
 import { connect } from 'react-redux'
 import { onPlacaCpf } from '../store/actions/placaCpf'
+import GeraToken from '../GeraToken'
 
 class Auth extends Component {
     constructor(props) {
@@ -26,23 +27,13 @@ class Auth extends Component {
             return Alert.alert('Informe a o cpf')
         }
 
-        try {
-            const res = await axios.get('http://200.150.166.73:5008/GeraToken', {
-                auth: {
-                    username: 'capao',
-                    password: 'capao'
-                }
-            })
-            console.log(res.data.Token)
-            axios.defaults.headers.common['token']
-                = `${res.data.Token}`
+        const data = await GeraToken()
+        if (data) {
             this.props.onPlacaCpf({ ...this.state })
             this.props.navigation.navigate('Home')
-            console.log(this.props.cpf, this.props.placa)
-
-
-        } catch (err) {
-            console.log(err)
+            console.log(true)
+        } else {
+            console.log(false)
         }
     }
 

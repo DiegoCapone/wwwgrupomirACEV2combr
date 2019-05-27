@@ -12,6 +12,8 @@ import Styles from '../Components/StylesPattern'
 
 
 
+
+
 const initialState = {
     entregas: [],
     camera: false,
@@ -54,7 +56,6 @@ class AdicionarCodeBar extends Component {
     }
 
     ValidaCodeBar = async () => {
-
         const res = await axios.post('http://200.150.166.73:5008/EnviaFoto', {
             chave: this.state.codeBar,
         })
@@ -83,6 +84,7 @@ class AdicionarCodeBar extends Component {
         } else {
             Alert.alert('status')
         }
+
 
     }
 

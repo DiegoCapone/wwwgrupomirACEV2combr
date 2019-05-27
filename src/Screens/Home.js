@@ -7,6 +7,8 @@ import BtnSair from '../Components/ButtonSair'
 import moment from 'moment'
 import 'moment/locale/pt-br'
 import { connect } from 'react-redux'
+import GeraToken from '../GeraToken'
+
 
 
 // import { Container } from './styles';
@@ -19,11 +21,50 @@ class ComponentHome extends Component {
     }
 
     Logout = () => this.props.navigation.navigate('ValidaToken')
-    Novo = () => this.props.navigation.navigate('Novo')
-    Pendentes = () => this.props.navigation.navigate('Pendentes')
-    Canhoto = () => this.props.navigation.navigate('Canhoto')
-    SemCanhoto = () => this.props.navigation.navigate('SemCanhoto')
 
+    Novo = async () => {
+        const data = await GeraToken()
+        if (data) {
+            this.props.navigation.navigate('Novo')
+            console.log(true)
+        } else {
+            console.log(false)
+            alert.alert('erro iris/Token')
+        }
+    }
+
+    Pendentes = async () => {
+        const data = await GeraToken()
+        if (data) {
+            this.props.navigation.navigate('Pendentes')
+            console.log(true)
+        } else {
+            console.log(false)
+            alert.alert('erro iris/Token')
+        }
+    }
+
+    Canhoto = async () => {
+        const data = await GeraToken()
+        if (data) {
+            this.props.navigation.navigate('Canhoto')
+            console.log(true)
+        } else {
+            console.log(false)
+            alert.alert('erro iris/Token')
+        }
+    }
+
+    SemCanhoto = async () => {
+        const data = await GeraToken()
+        if (data) {
+            this.props.navigation.navigate('SemCanhoto')
+            console.log(true)
+        } else {
+            console.log(false)
+            alert.alert('erro iris/Token')
+        }
+    }
 
 
 

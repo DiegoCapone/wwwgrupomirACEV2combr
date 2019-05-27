@@ -9,6 +9,8 @@ import axios from 'axios'
 
 
 
+
+
 const initialState = {
     nome: null,
     rg: null,
@@ -75,6 +77,7 @@ export default class AdicionarSemCanhoto extends Component {
             console.log(error)
         })
 
+
         const res = await axios.post('http://200.150.166.73:5008/EnviaFoto', {
             obs: this.state.nome,
             date: moment().format('YYYY[-]MM[-]D'),
@@ -92,6 +95,8 @@ export default class AdicionarSemCanhoto extends Component {
         } else {
             return Alert.alert('Erro no request')
         }
+        console.log(true)
+
     }
 
     updateItem = async () => {
