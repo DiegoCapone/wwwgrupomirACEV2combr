@@ -19,6 +19,9 @@ class Auth extends Component {
     }
 
     GeraToken = async () => {
+
+        navigator.geolocation.getCurrentPosition((position) => { })
+
         if (!this.state.placa) {
             return Alert.alert('Informe a placa')
         }
